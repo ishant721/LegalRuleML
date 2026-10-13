@@ -1,0 +1,16 @@
+LegalRuleML validation report
+==============================
+[PASS] well-formed XML
+[PASS] root is lrml:LegalRuleML  -> got {http://docs.oasis-open.org/legalruleml/ns/v1.0/}LegalRuleML
+[PASS] lrml namespace declared
+[PASS] ruleml namespace declared
+[PASS] has >=1 LegalSource  -> 1 found
+[PASS] has PrescriptiveStatement>Rule  -> 1 found
+[PASS] Rule has if and then
+[PASS] conclusion carries a deontic modality (Obligation/Permission/Prohibition/Right)
+[PASS] all keyref resolve to a key  -> 3 refs ok
+[PASS] Association appliesSource/toTarget resolve  -> 1 association(s)
+------------------------------
+[schema] official RELAX NG/XSD check skipped (no schema provided). See schema/README.md to run jing/xmllint against the OASIS schema.
+==============================
+RESULT: VALID

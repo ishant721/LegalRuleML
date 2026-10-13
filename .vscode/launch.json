@@ -1,0 +1,8 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "Run pipeline (live fetch)", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/main.py", "console": "integratedTerminal", "cwd": "${workspaceFolder}" },
+    { "name": "Run pipeline (offline / cached)", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/main.py", "args": ["--offline"], "console": "integratedTerminal", "cwd": "${workspaceFolder}" },
+    { "name": "Validate only", "type": "debugpy", "request": "launch", "module": "src.validate", "args": ["output/gdpr_art8_2.lrml.xml"], "console": "integratedTerminal", "cwd": "${workspaceFolder}" }
+  ]
+}

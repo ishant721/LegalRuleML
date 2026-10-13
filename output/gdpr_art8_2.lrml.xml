@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  OASIS LegalRuleML Core v1.0 representation of GDPR Article 8(2).
+  Every phrase of the provision is rendered as an explicit atom;
+  'given or authorised' is a ruleml:Or; the obligation names its
+  bearer via lrml:Bearer. See HOW_IT_WORKS.md for the full mapping.
+-->
+<lrml:LegalRuleML xmlns:lrml="http://docs.oasis-open.org/legalruleml/ns/v1.0/" xmlns:ruleml="http://ruleml.org/spec" xmlns:ex="http://example.org/gdpr#" xmlns:prOnto="http://example.org/pronto#" xmlns:dapreco="http://example.org/dapreco#">
+  <lrml:LegalSources>
+    <lrml:LegalSource key="ls_art8_2" sameAs="https://gdpr-info.eu/art-8-gdpr/"/>
+  </lrml:LegalSources>
+  <lrml:Statements key="stmts_art8_2">
+    <lrml:PrescriptiveStatement key="ps_art8_2">
+      <lrml:Paraphrase>The controller shall make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child, taking into consideration available technology.</lrml:Paraphrase>
+      <ruleml:Rule closure="universal">
+        <ruleml:if>
+          <!-- triggering conditions ("in such cases" -> Art 8(1)) -->
+          <ruleml:And>
+            <ruleml:Atom>
+              <!-- the actor is a data controller -->
+              <ruleml:Rel iri="prOnto:Controller"/>
+              <ruleml:Var key="controller">controller</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- the data subject is the child -->
+              <ruleml:Rel iri="prOnto:DataSubject"/>
+              <ruleml:Var key="child">child</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- the data subject is a minor (child) -->
+              <ruleml:Rel iri="ex:Child"/>
+              <ruleml:Var>child</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- an information society service -->
+              <ruleml:Rel iri="ex:InformationSocietyService"/>
+              <ruleml:Var key="service">service</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- offered directly to the child (Art 8(1)) -->
+              <ruleml:Rel iri="ex:offeredDirectlyToChild"/>
+              <ruleml:Var>service</ruleml:Var>
+              <ruleml:Var>child</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- processing of the child's personal data -->
+              <ruleml:Rel iri="prOnto:PersonalDataProcessing"/>
+              <ruleml:Var key="processing">processing</ruleml:Var>
+              <ruleml:Var>controller</ruleml:Var>
+              <ruleml:Var>child</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- processing relies on consent as legal basis (Art 6(1)(a)) -->
+              <ruleml:Rel iri="ex:basedOnConsent"/>
+              <ruleml:Var>processing</ruleml:Var>
+            </ruleml:Atom>
+            <ruleml:Atom>
+              <!-- the child is below the applicable consent age (Art 8(1)) -->
+              <ruleml:Rel iri="ex:belowConsentAge"/>
+              <ruleml:Var>child</ruleml:Var>
+            </ruleml:Atom>
+          </ruleml:And>
+        </ruleml:if>
+        <ruleml:then>
+          <lrml:Obligation>
+            <!-- normative modality: Obligation ('shall') -->
+            <lrml:Bearer keyref="#controller">
+              <!-- bearer of the obligation: the controller -->
+            </lrml:Bearer>
+            <ruleml:And>
+              <ruleml:Atom>
+                <!-- a reasonable effort -->
+                <ruleml:Rel iri="ex:ReasonableEffort"/>
+                <ruleml:Var key="effort">effort</ruleml:Var>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- the controller makes that effort -->
+                <ruleml:Rel iri="ex:makesEffort"/>
+                <ruleml:Var>controller</ruleml:Var>
+                <ruleml:Var>effort</ruleml:Var>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- the effort's purpose is to verify the consent -->
+                <ruleml:Rel iri="ex:hasPurposeToVerify"/>
+                <ruleml:Var>effort</ruleml:Var>
+                <ruleml:Var key="consent">consent</ruleml:Var>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- considering available technology -->
+                <ruleml:Rel iri="ex:takesIntoConsideration"/>
+                <ruleml:Var>effort</ruleml:Var>
+                <ruleml:Ind>availableTechnology</ruleml:Ind>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- available technology -->
+                <ruleml:Rel iri="ex:AvailableTechnology"/>
+                <ruleml:Ind>availableTechnology</ruleml:Ind>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- the consent in question -->
+                <ruleml:Rel iri="prOnto:Consent"/>
+                <ruleml:Var>consent</ruleml:Var>
+              </ruleml:Atom>
+              <ruleml:Atom>
+                <!-- the holder of parental responsibility over the child -->
+                <ruleml:Rel iri="ex:HolderOfParentalResponsibility"/>
+                <ruleml:Var key="holder">holder</ruleml:Var>
+                <ruleml:Var>child</ruleml:Var>
+              </ruleml:Atom>
+              <ruleml:Or>
+                <!-- disjunction: 'given OR authorised' -->
+                <ruleml:Atom>
+                  <!-- consent is GIVEN by the holder ... -->
+                  <ruleml:Rel iri="dapreco:givenBy"/>
+                  <ruleml:Var>consent</ruleml:Var>
+                  <ruleml:Var>holder</ruleml:Var>
+                </ruleml:Atom>
+                <ruleml:Atom>
+                  <!-- ... OR authorised by the holder -->
+                  <ruleml:Rel iri="dapreco:authorisedBy"/>
+                  <ruleml:Var>consent</ruleml:Var>
+                  <ruleml:Var>holder</ruleml:Var>
+                </ruleml:Atom>
+              </ruleml:Or>
+            </ruleml:And>
+          </lrml:Obligation>
+        </ruleml:then>
+      </ruleml:Rule>
+    </lrml:PrescriptiveStatement>
+  </lrml:Statements>
+  <lrml:Associations>
+    <lrml:Association>
+      <lrml:appliesSource keyref="#ls_art8_2"/>
+      <lrml:toTarget keyref="#ps_art8_2"/>
+    </lrml:Association>
+  </lrml:Associations>
+</lrml:LegalRuleML>

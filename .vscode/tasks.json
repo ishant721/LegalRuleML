@@ -1,0 +1,9 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "Setup: create venv + install deps", "type": "shell", "command": "python3 -m venv .venv && ./.venv/bin/python -m pip install --upgrade pip && ./.venv/bin/python -m pip install -r requirements.txt", "windows": { "command": "python -m venv .venv ; .venv\\Scripts\\python -m pip install --upgrade pip ; .venv\\Scripts\\python -m pip install -r requirements.txt" }, "problemMatcher": [] },
+    { "label": "Run: full pipeline", "type": "shell", "command": "${workspaceFolder}/.venv/bin/python main.py", "windows": { "command": "${workspaceFolder}\\.venv\\Scripts\\python main.py" }, "group": { "kind": "build", "isDefault": true }, "problemMatcher": [] },
+    { "label": "Run: offline (cached text)", "type": "shell", "command": "${workspaceFolder}/.venv/bin/python main.py --offline", "windows": { "command": "${workspaceFolder}\\.venv\\Scripts\\python main.py --offline" }, "problemMatcher": [] },
+    { "label": "Validate: built-in checks", "type": "shell", "command": "${workspaceFolder}/.venv/bin/python -m src.validate output/gdpr_art8_2.lrml.xml", "windows": { "command": "${workspaceFolder}\\.venv\\Scripts\\python -m src.validate output/gdpr_art8_2.lrml.xml" }, "problemMatcher": [] }
+  ]
+}
